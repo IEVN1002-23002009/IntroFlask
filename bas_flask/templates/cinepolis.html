@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block container %}
+
+<!-- Columna Izquierda: Formulario de Entradas -->
+<div class="span6">
+    <div class="well" style="background-color: #fff;">
+        
+        <div style="background-color: #0044cc; color: white; padding: 15px; border-radius: 4px; text-align: center; margin-bottom: 20px;">
+            <h2 style="margin: 0; font-size: 24px;">Cinépolis</h2>
+            <p style="margin: 0; font-size: 11px; letter-spacing: 2px;">LA CAPITAL DEL CINE</p>
+        </div>
+
+        <h3 style="margin-bottom: 15px; font-size: 18px;">Entradas</h3>
+
+        <form action="/" method="POST">
+
+            <div style="margin-bottom: 15px;">
+                <label for="nombre" style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px;">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="{{ nombre }}" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="cantidadCompradores" style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px;">Cantidad de compradores</label>
+                <input type="number" id="cantidadCompradores" name="cantidadCompradores" min="1" value="{{ cantidadCompradores }}" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px;">Tarjeta Cineco</label>
+                <label class="radio inline" style="margin-right: 15px;">
+                    <input type="radio" name="tarjetaCineco" value="Si" {% if tarjetaCineco == "Si" %}checked{% endif %}> Sí
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="tarjetaCineco" value="No" {% if tarjetaCineco == "No" %}checked{% endif %}> No
+                </label>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="cantidadBoletas" style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px;">Cantidad de boletas</label>
+                <input type="number" id="cantidadBoletas" name="cantidadBoletas" min="1" value="{{ cantidadBoletas }}" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div style="text-align: right;">
+                <button type="submit" class="btn btn-primary" style="padding: 8px 20px;">
+                    Procesar
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Columna Derecha: Salidas y Resultados -->
+<div class="span6">
+    <div class="well" style="background-color: #fff;">
+        <h3 style="margin-bottom: 15px; font-size: 18px;">Salidas</h3>
+
+        {% if mensajeError %}
+            <div class="alert alert-error" style="text-align: center; margin-bottom: 15px;">
+                {{ mensajeError }}
+            </div>
+        {% endif %}
+
+        <div style="text-align: center; padding: 20px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; color: #555; margin-bottom: 5px;">
+                Valor a pagar
+            </label>
+            <div style="font-size: 36px; font-weight: bold; color: #0044cc;">
+                ${{ "%.2f"|format(valorAPagar) }}
+            </div>
+        </div>
+
+        {% if procesado and not mensajeError %}
+            <div style="border-top: 1px solid #ddd; padding-top: 15px;">
+                <h4 style="margin-bottom: 10px; font-size: 16px;">Datos del pedido</h4>
+                <p style="margin: 5px 0;"><strong>Nombre:</strong> {{ nombre }}</p>
+                <p style="margin: 5px 0;"><strong>Compradores:</strong> {{ cantidadCompradores }}</p>
+                <p style="margin: 5px 0;"><strong>Tarjeta:</strong> {{ tarjetaCineco }}</p>
+                <p style="margin: 5px 0;"><strong>Boletas totales:</strong> {{ cantidadBoletas }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
